@@ -12,15 +12,12 @@ import java.io.File;
 public class WebFormAutomation {
 
     public static void main(String[] args) {
-        // ✅ Setup ChromeDriver using WebDriverManager
         WebDriverManager.chromedriver().setup();
 
-        // ✅ Resolve local HTML file to file:// URL
         File file = new File("src/main/resources/web-form.html");
         String htmlFilePath = file.toURI().toString();
         System.out.println("Resolved HTML path: " + htmlFilePath);
 
-        // ✅ Chrome headless options
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--headless");
         options.addArguments("--disable-gpu");
@@ -37,7 +34,6 @@ public class WebFormAutomation {
             driver.get(htmlFilePath);
             System.out.println("Opened: " + htmlFilePath);
 
-            // ✅ Fill form elements with IDs matching your HTML
             WebElement fullNameInput = driver.findElement(By.id("fullName"));
             fullNameInput.sendKeys("Automated Test User");
             System.out.println("Entered full name.");
@@ -58,17 +54,16 @@ public class WebFormAutomation {
             submitButton.click();
             System.out.println("Clicked the submit button.");
 
-            System.out.println("\n✅ Form automation completed successfully.");
+            System.out.println("\nForm automation completed successfully.");
 
         } catch (Exception e) {
-            System.err.println("❌ An error occurred:");
+            System.err.println("An error occurred:");
             e.printStackTrace();
         } finally {
             if (driver != null) {
                 driver.quit();
                 System.out.println("WebDriver closed.");
             }
-            // ✅ This kills any lingering Selenium threads cleanly when using exec-maven-plugin
             System.exit(0);
         }
     }
